@@ -9,7 +9,7 @@ except ImportError:
 class PlotLossesCallback(Callback):
   '''Callback to plot losses against.'''
 
-  def __init__(self, plot_type, clear_ipython=False):
+  def __init__(self, plot_type, clear_ipython=False, use_ggplot=True):
     '''Creates new instance of the callback.
 
     Args:
@@ -17,11 +17,12 @@ class PlotLossesCallback(Callback):
       clear_ipython (bool): Defines if ipython should be cleared after the
     '''
     plot_type = plot_type.lower()
-    self.plot_type = ['epoch', 'batch', 'lr', 'lr_batch'].index(plot_type) >= 0 ? plot_type : "epoch"
+    self.plot_type = plot_type if ['epoch', 'batch', 'lr', 'lr_batch'].index(plot_type) >= 0 else "epoch"
     self.clear_ipython = clear_ipython
 
-    # use specific plot type
-    plt.style.use('ggplot')
+    # change plot layout
+    if use_ggplot:
+      plt.style.use('ggplot')
 
   def on_train_begin(self, logs={}):
     self.count_epoch = 0
