@@ -1,5 +1,6 @@
 from tensorflow.keras.callbacks import Callback
 from tensorflow.keras import backend
+import matplotlib.pyplot as plt
 try:
   from IPython.display import clear_output
 except ImportError:
@@ -9,11 +10,12 @@ except ImportError:
 class PlotLossesCallback(Callback):
   '''Callback to plot losses against.'''
 
-  def __init__(self, plot_type, clear_ipython=False, use_ggplot=True):
+  def __init__(self, plot_type, plot_lr=False, clear_ipython=False, use_ggplot=True):
     '''Creates new instance of the callback.
 
     Args:
       plot_type (str): Defines the type of plot (options: ['epoch', 'batch', 'lr', 'lr_batch'])
+      plot_lr (bool): Defines if the learning rate should be plotted (only applies to `'epoch'` and `'batch'`)
       clear_ipython (bool): Defines if ipython should be cleared after the
     '''
     plot_type = plot_type.lower()
@@ -52,10 +54,15 @@ class PlotLossesCallback(Callback):
       # update the relevant values
       self.x.append(self._get_value())
       self.losses.append(logs.get('loss'))
+      if self.plot_lr:
+        self.lr.append(backend.eval(self.model.optimizer.lr))
 
       # plot the relevant data
       plt.plot(self.x, self.losses, label="loss")
       plt.plot(self.x_val, self.val_losses, label="val_loss")
+      # check if learning rate should be plotted
+      if self.plot_type == 'batch' and self.plot_lr:
+        plt.plot(self.x, self.lr, label="lr")
 
       # store the relevant plot data
       plt.legend()
@@ -72,6 +79,8 @@ class PlotLossesCallback(Callback):
       self.x.append(self._get_value())
       self.x_val.append(self._get_value())
       self.losses.append(logs.get('loss'))
+      if self.plot_lr:
+        self.lr.append(backend.eval(self.model.optimizer.lr))
     self.val_losses.append(logs.get('val_loss'))
 
     # update the counter
@@ -87,6 +96,8 @@ class PlotLossesCallback(Callback):
     # plot the relevant data
     plt.plot(self.x, self.losses, label="loss")
     plt.plot(self.x_val, self.val_losses, label="val_loss")
+    if self.plot_type in ['batch', 'epoch'] and self.plot_lr:
+      plt.plot(self.x, self.lr, label="lr")
 
     # store the relevant plot data
     plt.legend()
