@@ -15,7 +15,7 @@ class CyclicPolicy():
     self.step_size = step_size
     self.decay = decay
 
-  def clr_triangle(self, steps, tsteps, epochs):
+  def clr_triangular(self, steps, tsteps, epochs):
     '''Defines a cyclic learning rate policy based on a triangular function.
 
     Example:
@@ -27,17 +27,19 @@ class CyclicPolicy():
       epochs (int): the number of epochs since training started
     '''
     # check if learning rates should be adjusted
+    max_lr = self.max_lr
+    base_lr = self.base_lr
     if decay is not None:
-      self.max_lr = self.decay(self.max_lr, tsteps, epochs)
-      self.base_lr = self.decay(self.max_lr, tsteps, epochs)
+      max_lr = self.decay(self.max_lr, tsteps, epochs)
+      base_lr = self.decay(self.base_lr, tsteps, epochs)
 
     # calculate current position in the cycle and learning rate
     cycle = np.floor(1+tsteps/(2*self.step_size))
-    x = np.abs(tsteps/step_size - 2*cycle + 1)
-    lr = self.base_lr + (self.max_lr-self.base_lr)*np.maximum(0, (1-x))
+    x = np.abs(tsteps/self.step_size - 2*cycle + 1)
+    lr = base_lr + (max_lr-base_lr)*np.maximum(0, (1-x))
     return lr
 
-  def clr_polynom(self, steps, tsteps, epochs):
+  def clr_polynomial(self, steps, tsteps, epochs):
     # check if learning rates should be adjusted
     if decay is not None:
       self.max_lr = self.decay(self.max_lr, tsteps, epochs)

@@ -10,7 +10,7 @@ except ImportError:
 class PlotLossesCallback(Callback):
   '''Callback to plot losses against.'''
 
-  def __init__(self, plot_type, plot_lr=False, clear_ipython=False, use_ggplot=True):
+  def __init__(self, plot_type, plot_lr=False, draw_every_batch=False, clear_ipython=False, use_ggplot=True):
     '''Creates new instance of the callback.
 
     Args:
@@ -21,6 +21,8 @@ class PlotLossesCallback(Callback):
     plot_type = plot_type.lower()
     self.plot_type = plot_type if ['epoch', 'batch', 'lr', 'lr_batch'].index(plot_type) >= 0 else "epoch"
     self.clear_ipython = clear_ipython
+    self.plot_lr = plot_lr
+    self.draw_every_batch = draw_every_batch
 
     # change plot layout
     if use_ggplot:
@@ -57,16 +59,17 @@ class PlotLossesCallback(Callback):
       if self.plot_lr:
         self.lr.append(backend.eval(self.model.optimizer.lr))
 
-      # plot the relevant data
-      plt.plot(self.x, self.losses, label="loss")
-      plt.plot(self.x_val, self.val_losses, label="val_loss")
-      # check if learning rate should be plotted
-      if self.plot_type == 'batch' and self.plot_lr:
-        plt.plot(self.x, self.lr, label="lr")
+      # plot the relevant data (if enabled)
+      if self.draw_every_batch:
+        plt.plot(self.x, self.losses, label="loss")
+        plt.plot(self.x_val, self.val_losses, label="val_loss")
+        # check if learning rate should be plotted
+        if self.plot_type == 'batch' and self.plot_lr:
+          plt.plot(self.x, self.lr, label="lr")
 
-      # store the relevant plot data
-      plt.legend()
-      plt.show();
+        # store the relevant plot data
+        plt.legend()
+        plt.show();
 
     # update the counter
     self.count_batch += 1
