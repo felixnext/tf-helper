@@ -2,10 +2,15 @@
 
 This is a collection of helper function that I found useful during my work with TensorFlow and Keras.
 
-Feel free to make pull requests if you see potential improvements.
+## Getting Started
 
+The repo is structured into different categories (e.g. `data` or `learning`). Each category contains a number of python files that are designed to be copied out of the project and used in various projects.
+
+The files came into being during a variety of projects I did with TF and keras and are basically code snippets that I have found myself reusing quite often.
 
 ## Docs
+
+This section contains a basic overview of the different categories and how the scripts can be used.
 
 ### Learning
 
@@ -18,7 +23,6 @@ Various metrics that are not defined by default in tensorflow/keras.
 ### Visualization
 
 Various functions to visualize learning processes for easier introspection.
-
 
 ### Data
 
@@ -41,4 +45,10 @@ ds = ImageDataset.loadClasses("/dataset/folder", settings=imgSettings)
 # TODO
 ```
 
-However, there are also some lower level function
+However, there are also some lower level function to manipulate the image data directly (TODO)
+
+## ToDo List
+
+* [ ] Add Jupyter Notebooks to demonstrate usage of individual scripts on dummy data.
+* [ ] Update Documentation on the scripts
+* [ ] Complete implementation ofdata functions

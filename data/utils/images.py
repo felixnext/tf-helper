@@ -1,7 +1,7 @@
 '''Various image handling functions.'''
 
 
-from .common import *
+from common import *
 import math
 import numpy as np
 
@@ -101,7 +101,7 @@ def imread_resize(img_path, input_size, color_channels=3, resize=None, color=Non
 
   Args:
     img_path (str): path to the image to load
-    input_size (tuple): 
+    input_size (tuple):
     color_channels (int): number of color channels inside the image
   '''
   img = imread(img_path, color_channels)
