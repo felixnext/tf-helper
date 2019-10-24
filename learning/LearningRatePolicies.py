@@ -1,8 +1,7 @@
 import numpy as np
 
 class CyclicPolicy():
-  def __init__(self, base_lr, max_lr, step_size, decay=None):
-    '''constructor.
+    '''Policy to create a cyclic learning rate over time.
 
     Args:
       base_lr (float): minimal learning rate to apply
@@ -10,6 +9,7 @@ class CyclicPolicy():
       step_size (int): number of steps for one cycle (i.e. from `base_lr` to `max_lr`)
       decay (fct): optional decay function to change the values for `base_lr` and `max_lr` over time with signatue [`(lr, total_steps, epochs) => lr`]
     '''
+  def __init__(self, base_lr, max_lr, step_size, decay=None):
     self.base_lr = base_lr
     self.max_lr = max_lr
     self.step_size = step_size

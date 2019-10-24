@@ -11,8 +11,12 @@ class StreamlitCallback(tf.keras.callbacks.Callback):
 
   Copied and modified from streamlit MNist example.
 
-  Args:
-
+  Example:
+  ```
+  class MyCallback(StreamlitCallback):
+    def test_step(self):
+      # ...
+  ```
   '''
   def __init__(self):
     pass
@@ -56,9 +60,9 @@ class StreamlitCallback(tf.keras.callbacks.Callback):
     )
 
   def on_epoch_end(self, epoch, logs=None):
-    # st.write('**Summary**')
     # call external test function
     self.test_step()
+
     # print the summary
     summary = "\n".join(
         "%(k)8s : %(v)8.5f" % {"k": k, "v": v} for (k, v) in logs.items()
@@ -70,4 +74,5 @@ class StreamlitCallback(tf.keras.callbacks.Callback):
     )
 
   def test_step(self):
+    '''Abstract Function to implement inference and introspection functions.'''
     raise NotImplementedError("Not yet implemented")
