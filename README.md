@@ -6,11 +6,25 @@ TODO: Note about purpose and integration of different code bodies.
 
 ## Getting Started
 
-The repo is structured into different categories (e.g. `data` or `learning`). Each category contains a number of python files that are designed to be copied out of the project and used in various projects.
+You can install the library by using pip:
 
-The files came into being during a variety of projects I did with TF and keras and are basically code snippets that I have found myself reusing quite often.
+```bash
+pip install .
+```
+
+After that simply import the library and use according to docs (see below):
+
+```python
+import tf_helper as tfh
+```
+
+> Note: The library was build and tested against tensorflow-2.0
 
 ## Docs
+
+The library is split into different sub-modules, based on their purpose:
+
+* `data` - all functions relevant to data loading and augmentation (including default datasets)
 
 This section contains a basic overview of the different categories and how the scripts can be used.
 
@@ -79,6 +93,11 @@ However, there are also some lower level function to manipulate the image data d
 ## Sources
 
 List of research and sources relevant to this repository:
+
+* StreamlitCallback: [Streamlit](https://github.com/streamlit/streamlit/tree/develop/examples)
+* Cyclic Learning Rate: [bckenstler](https://github.com/bckenstler/CLR/blob/master/clr_callback.py)
+* Look Ahead Optimizer: [CyberZHG](https://github.com/CyberZHG/keras-lookahead)
+* RAdam: [CyberZHG](https://github.com/CyberZHG/keras-radam)
 
 > Note: In most cases I have copied and adjusted the code. Notes for that are in the headers of the respective files.
 

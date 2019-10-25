@@ -1,5 +1,8 @@
-'''Look Ahead Optimizer
-Adjusted code from: https://github.com/CyberZHG/keras-lookahead
+'''
+Look Ahead Optimizer
+
+Paper: https://arxiv.org/abs/1907.08610
+Source: https://github.com/CyberZHG/keras-lookahead
 '''
 
 from tensorflow import keras
